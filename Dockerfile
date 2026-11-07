@@ -16,8 +16,8 @@ RUN cd ./*/packages/app-mobile && yarn install && yarn web
 
 # copy build to /app
 WORKDIR /app
-RUN cp -a /source/*/packages/app-mobile/web/dist .
+RUN cp -a /source/*/packages/app-mobile/web/dist/* .
 
-# serve on port 8080
+# serve http on port 8080
 EXPOSE 8080
 CMD npx -y http-server . -p 8080
