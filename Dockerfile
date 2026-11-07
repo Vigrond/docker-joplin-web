@@ -11,10 +11,13 @@ WORKDIR /source
 RUN curl -s https://api.github.com/repos/laurent22/joplin/releases/latest | jq -r '.tarball_url' | wget -qO - -i - | tar -xzvf -
 
 # build web app
-WORKDIR /source/*/packages/app-mobile
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN yarn install && yarn web
+RUN cd ./*/packages/app-mobile && yarn install && yarn web
 
 # copy build to /app
 WORKDIR /app
 RUN cp -a /source/*/packages/app-mobile/web/dist .
+
+# serve on port 8080
+EXPOSE 8080
+CMD npx -y http-server . -p 8080
